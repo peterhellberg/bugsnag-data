@@ -15,9 +15,16 @@ import (
 )
 
 func main() {
-	var key string
+	var (
+		key   string
+		max   int
+		count int
+		delay time.Duration
+	)
 
 	flag.StringVar(&key, "key", "", "Data access API key (required)")
+	flag.IntVar(&max, "max", 0, "Max number of requests to make (0 means unlimited)")
+	flag.DurationVar(&delay, "delay", 5*time.Second, "The delay between each request")
 
 	flag.Parse()
 
@@ -35,8 +42,13 @@ func main() {
 	enc := json.NewEncoder(os.Stdout)
 
 	for {
+		if max > 0 && count >= max {
+			break
+		}
+
 		res, err := c.Get(rawurl)
 		if err != nil {
+			fmt.Fprintln(os.Stderr, "ERROR", err.Error())
 			return
 		}
 
@@ -49,6 +61,7 @@ func main() {
 		}
 
 		if res.StatusCode != http.StatusOK {
+			fmt.Fprintln(os.Stderr, "ERROR Unexpected status code", res.Status)
 			break
 		}
 
@@ -63,7 +76,9 @@ func main() {
 			break
 		}
 
-		time.Sleep(50 * time.Millisecond)
+		count++
+
+		time.Sleep(delay)
 	}
 }
 
