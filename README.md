@@ -22,6 +22,18 @@ go get -u github.com/peterhellberg/bugsnag-data
 
 ## Usage example
 
+```sh
+Usage of bugsnag-data:
+  -delay duration
+    	The delay between each request (default 5s)
+  -key string
+    	Data access API key (required)
+  -max int
+    	Max number of requests to make (0 means unlimited)
+```
+
+The first argument after the flags have been parsed is used as the path (of the first request to the Data access API).
+
 ```bash
 $ bugsnag-data -key [REDACTED] /accounts | jq .[0].account_creator
 
@@ -36,6 +48,9 @@ GET https://api.bugsnag.com/accounts
   "url": "https://api.bugsnag.com/users/[REDACTED]"
 }
 ```
+
+The `bugsnag-data` command will follow next in the [Link header](https://tools.ietf.org/html/rfc5988)
+up to the number of times as specified in the max flag.
 
 ## License (MIT)
 
