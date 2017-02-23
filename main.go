@@ -48,8 +48,13 @@ func main() {
 
 		res, err := c.Get(rawurl)
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "ERROR", err.Error())
+			fmt.Fprintln(os.Stderr, "\nERROR", err.Error())
 			return
+		}
+
+		if res.Header.Get("X-RateLimit-Remaining") == "1" {
+			fmt.Fprintln(os.Stderr, "\nRATE Sleeping for 60s before being rate limited")
+			time.Sleep(60 * time.Second)
 		}
 
 		if strings.HasPrefix(res.Header.Get("Content-Type"), "application/json") {
@@ -60,13 +65,13 @@ func main() {
 			enc.Encode(v)
 		}
 
-		if res.StatusCode != http.StatusOK {
-			fmt.Fprintln(os.Stderr, "ERROR Unexpected status code", res.Status)
-			break
-		}
-
 		io.CopyN(ioutil.Discard, res.Body, 64)
 		res.Body.Close()
+
+		if res.StatusCode != http.StatusOK {
+			fmt.Fprintln(os.Stderr, "\nERROR Unexpected status code", res.Status)
+			break
+		}
 
 		group := link.ParseResponse(res)
 
