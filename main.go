@@ -92,6 +92,17 @@ func newClient(key string) *client {
 }
 
 func (c *client) Get(rawurl string) (*http.Response, error) {
+	req, err := c.request(rawurl)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Fprintln(os.Stderr, "\nGET", req.URL)
+
+	return c.Do(req)
+}
+
+func (c *client) request(rawurl string) (*http.Request, error) {
 	req, err := http.NewRequest(http.MethodGet, rawurl, nil)
 	if err != nil {
 		return nil, err
@@ -99,7 +110,5 @@ func (c *client) Get(rawurl string) (*http.Response, error) {
 
 	req.Header.Set("Authorization", "token "+c.key)
 
-	fmt.Fprintln(os.Stderr, "\nGET", req.URL)
-
-	return c.Do(req)
+	return req, nil
 }
