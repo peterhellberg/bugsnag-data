@@ -1,5 +1,6 @@
 # bugsnag-data
 
+[![Build Status](https://travis-ci.org/peterhellberg/bugsnag-data.svg?branch=master)](https://travis-ci.org/peterhellberg/bugsnag-data)
 [![Go Report Card](https://goreportcard.com/badge/github.com/peterhellberg/bugsnag-data)](https://goreportcard.com/report/github.com/peterhellberg/bugsnag-data)
 [![License MIT](https://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/peterhellberg/bugsnag-data#license-mit)
 
