@@ -24,7 +24,7 @@ func main() {
 
 	flag.StringVar(&key, "key", "", "Data access API key (required)")
 	flag.IntVar(&max, "max", 0, "Max number of requests to make (0 means unlimited)")
-	flag.DurationVar(&delay, "delay", 5*time.Second, "The delay between each request")
+	flag.DurationVar(&delay, "delay", 6*time.Second, "The delay between each request")
 
 	flag.Parse()
 
