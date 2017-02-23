@@ -49,8 +49,9 @@ GET https://api.bugsnag.com/accounts
 }
 ```
 
-The `bugsnag-data` command will follow next in the [Link header](https://tools.ietf.org/html/rfc5988)
-up to the number of times as specified in the max flag.
+`bugsnag-data` will follow next in the [Link header](https://tools.ietf.org/html/rfc5988)
+until reaching a response with no Link header or having done the max number of requests
+as specified in the max command line flag.
 
 ## License (MIT)
 
