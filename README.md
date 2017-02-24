@@ -25,7 +25,7 @@ go get -u github.com/peterhellberg/bugsnag-data
 ```sh
 Usage of bugsnag-data:
   -delay duration
-    	The delay between each request (default 5s)
+    	The delay between each request (default 1s)
   -key string
     	Data access API key (required)
   -max int
